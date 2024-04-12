@@ -1,0 +1,10 @@
+{
+    "build": {
+        "env": {
+            "HUGO_VERSION": "0.124.1"
+        }
+    },
+    "framework": "hugo",
+    "installCommand": "yum -y install golang",
+    "buildCommand": "hugo --gc --minify --ignoreCache --logLevel debug"
+}
