@@ -1,0 +1,20 @@
+/* Fix the sizes of the Publication / Thought Leadership banners */
+.article-banner {
+    height:404px !important;
+}
+.img-hover-zoom img {
+    transition: none;
+}
+.img-hover-zoom:hover img {
+    transform: none;
+}
+/* Fix vertical centering of company logos next to each experience job title */
+#experience > div.container div.d-flex.align-content-start > div.mr-2.mb-2 {
+    display: flex !important;
+    align-items: center !important;
+}
+/* Fix vertical centering of company logos next to each certification title */
+#certifications > div.container div.d-flex.align-content-start > div.mr-2.mb-2 {
+    display: flex !important;
+    align-items: center !important;
+}

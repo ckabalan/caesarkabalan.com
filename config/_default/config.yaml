@@ -1,0 +1,29 @@
+baseURL: https://caesarkabalan.com
+languageCode: en-us
+title: Caesar Kabalan
+
+module:
+  imports:
+  - path: github.com/HugoBlox/theme-academic-cv
+    mounts:
+    - source: content/project
+      target: content/project
+      excludeFiles: '**'
+    - source: content/publication
+      target: content/publication
+      excludeFiles: '**'
+    - source: content/event
+      target: content/event
+      excludeFiles: '**'
+    - source: content/post
+      target: content/post
+      excludeFiles: '**'
+    - source: content/slides
+      target: content/slides
+      excludeFiles: '**'
+
+security:
+  funcs:
+    getenv:
+      - ^HUGO_
+      - ^WC_

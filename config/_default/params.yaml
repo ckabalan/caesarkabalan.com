@@ -1,0 +1,24 @@
+marketing:
+  seo:
+    site_type: Person
+    description: 'Caesar Kabalan is a Solutions Architect at Amazon Web Services (AWS). He brings together his development and enterprise infrastructure experience to invent solutions to solve customer challenges.'
+  #analytics:
+  #  google_analytics: ''
+  #  google_tag_manager: ''
+  #verification:
+  #  google: ''
+
+footer:
+  block: minimal
+  copyright:
+    notice: '© {year} Caesar Kabalan. This work is licensed under {license}'
+    license:
+      enable: true
+      allow_derivatives: true
+      share_alike: false
+      allow_commercial: true
+  # For multilingual sites, show a language chooser in the footer?
+  show_translations: true
+
+# Get rid of the "Powered by Hugo Blox" footer. Sorry :(
+i_am_a_sponsor: true
