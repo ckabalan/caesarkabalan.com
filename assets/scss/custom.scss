@@ -1,9 +1,20 @@
 /* Fix the sizes of the Publication / Thought Leadership banners */
 .article-banner {
-    height:404px !important;
+    max-height:404px !important;
+    height:unset;
+}
+@media (min-width: 992px) {
+    .article-banner {
+        max-height:404px !important;
+        height:unset;
+    }
+}
+.article-banner img {
+    object-fit: contain;
 }
 .img-hover-zoom img {
     transition: none;
+    object-fit: contain;
 }
 .img-hover-zoom:hover img {
     transform: none;
