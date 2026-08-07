@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://caesarkabalan.com/sitemap-index.xml

@@ -1,0 +1,18 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { NAV, SITE } from "../lib/site";
+---
+<BaseLayout title={`Page not found, ${SITE.title}`} description="That page moved." noindex>
+  <section class="band band--a">
+    <div class="wrap article">
+      <h1 class="article-title">That page moved</h1>
+      <p class="article-lead">
+        This site was rebuilt, so some older links no longer resolve. Everything is
+        still here, one level up.
+      </p>
+      <ul class="stub-links">
+        {NAV.map(({ label, slug }) => <li><a href={`/#${slug}`}>{label}</a></li>)}
+      </ul>
+    </div>
+  </section>
+</BaseLayout>

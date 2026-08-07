@@ -1,0 +1,45 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+import AuthorCard from "../components/AuthorCard.astro";
+import { SITE } from "../lib/site";
+
+interface Props {
+  title: string;
+  description: string;
+  meta: string[];
+  image?: { src: string; alt: string; w: number; h: number; caption?: string };
+  actions?: { href: string; label: string; primary?: boolean }[];
+  backHref?: string;
+  backLabel?: string;
+  jsonLd?: Record<string, unknown>;
+}
+const {
+  title, description, meta, image, actions = [],
+  backHref = "/#work", backLabel = "Back to work", jsonLd,
+} = Astro.props;
+---
+<BaseLayout title={`${title}, ${SITE.title}`} description={description} jsonLd={jsonLd}>
+  <section class="band band--a">
+    <div class="wrap article">
+      <p class="article-back"><a href={backHref}>{backLabel}</a></p>
+      <h1 class="article-title">{title}</h1>
+      <p class="article-meta">{meta.map((m) => <span>{m}</span>)}</p>
+      {actions.length > 0 && (
+        <p class="actions">
+          {actions.map((a) => (
+            <a class={a.primary ? "btn btn--filled" : "btn"} href={a.href} rel="noopener">{a.label}</a>
+          ))}
+        </p>
+      )}
+      {image && (
+        <figure class="article-fig">
+          <img src={image.src} alt={image.alt} width={image.w} height={image.h} decoding="async" />
+          {image.caption && <figcaption>{image.caption}</figcaption>}
+        </figure>
+      )}
+      <div class="article-body"><slot /></div>
+      <slot name="after" />
+      <AuthorCard />
+    </div>
+  </section>
+</BaseLayout>

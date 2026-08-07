@@ -1,0 +1,27 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { render } from "astro:content";
+interface Props { entry: CollectionEntry<"publications"> }
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const d = entry.data;
+---
+<article class="pub">
+  <figure class="pub-fig">
+    <img src={d.image} alt={d.imageAlt} width={d.imageWidth} height={d.imageHeight}
+         loading="lazy" decoding="async" />
+  </figure>
+  <div class="pub-body">
+    <p class="pub-meta">
+      <span>{d.date}</span>
+      <span>{d.publication}</span>
+      {d.coauthors && <span class="pub-co">{d.coauthors}</span>}
+    </p>
+    <h4 class="pub-title"><a href={`/publication/${d.slug}/`}>{d.title}</a></h4>
+    <div class="pub-summary"><Content /></div>
+    <p class="actions actions--tight">
+      <a class="btn" href={d.article} rel="noopener">Read article</a>
+      <a class="btn btn--ghost" href={d.repo} rel="noopener">Sample code</a>
+    </p>
+  </div>
+</article>

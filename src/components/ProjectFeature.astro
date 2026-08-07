@@ -1,0 +1,25 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { render } from "astro:content";
+interface Props { entry: CollectionEntry<"projects">; headingLevel?: "h2" | "h3" }
+const { entry, headingLevel = "h3" } = Astro.props;
+const { Content } = await render(entry);
+const d = entry.data;
+const Heading = headingLevel;
+---
+<article class="feature">
+  <figure class="feature-fig">
+    <img src={d.image} alt={d.imageAlt} width={d.imageWidth} height={d.imageHeight}
+         loading="lazy" decoding="async" />
+  </figure>
+  <div class="feature-body">
+    <Heading class="feature-title">
+      <a href={`/project/${d.slug}/`}>{d.title}</a>
+    </Heading>
+    <p class="actions">
+      <a class="btn btn--filled" href={d.site} rel="noopener">Visit {d.siteLabel}</a>
+      <a class="btn" href={d.repo} rel="noopener">Source</a>
+    </p>
+    <div class="feature-summary"><Content /></div>
+  </div>
+</article>

@@ -1,0 +1,26 @@
+/* Design tokens. Every colour, spacing, and sizing decision lives here so no
+   component ever references a literal value.
+
+   Contrast, computed rather than asserted:
+     #1565C0 on #FFFFFF ......... 5.75:1  AA
+     #1565C0 on #F7F7F7 ......... 5.36:1  AA
+     #0D47A1 on #FFFFFF ......... 8.63:1  AA   (emphasis = MORE contrast)
+     #313131 on #FFFFFF ........ 13.01:1  AA
+     rgba(0,0,0,.60) on #F7F7F7 . 5.61:1  AA
+
+   Single light theme. There is no dark mode, no toggle, and no theme script. */
+
+:root{
+  --container:78rem; --gutter:20px; --header-h:100px;
+  --band-pad:clamp(56px,6.5vw,84px);
+  --fs-body:clamp(.98rem,1.05vw,1.075rem); --fs-meta:.875rem;
+  --radius:3px;
+
+  --surface:#FFFFFF; --surface-alt:#F7F7F7;
+  --text:#313131; --text-muted:rgba(0,0,0,.60);
+  --accent:#1565C0; --accent-strong:#0D47A1;
+  --border-subtle:rgba(0,0,0,.11);
+  --rail-c:#1565C0;
+}
+@media(min-width:768px){:root{--header-h:52px}}
+@media(min-width:992px){:root{--gutter:32px;--header-h:70px}}

@@ -1,0 +1,71 @@
+---
+import { getCollection, render } from "astro:content";
+import ArticleLayout from "../../layouts/ArticleLayout.astro";
+import { SITE } from "../../lib/site";
+
+export async function getStaticPaths() {
+  const pubs = await getCollection("publications");
+  return pubs.map((entry) => ({
+    params: { slug: entry.data.slug },
+    props: {
+      entry,
+      others: pubs
+        .filter((p) => p.id !== entry.id)
+        .sort((a, b) => a.data.order - b.data.order),
+    },
+  }));
+}
+
+const { entry, others } = Astro.props;
+const { Content } = await render(entry);
+const d = entry.data;
+
+const authors = ["Caesar Kabalan"];
+if (d.coauthors) authors.push(d.coauthors.replace(/^with\s+/, ""));
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  headline: d.title,
+  datePublished: d.date,
+  publisher: { "@type": "Organization", name: d.publication },
+  author: authors.map((n) => ({ "@type": "Person", name: n })),
+  url: d.article,
+  mainEntityOfPage: new URL(`/publication/${d.slug}/`, SITE.url).href,
+};
+---
+
+<ArticleLayout
+  title={d.title}
+  description={`${d.title}. Published in the ${d.publication}.`}
+  meta={[d.date, d.publication, ...(d.coauthors ? [d.coauthors] : [])]}
+  image={{ src: d.image, alt: d.imageAlt, w: d.imageWidth, h: d.imageHeight }}
+  actions={[
+    { href: d.article, label: "Read the full article", primary: true },
+    { href: d.repo, label: "Sample code" },
+  ]}
+  jsonLd={jsonLd}
+>
+  <Content />
+  <p class="article-note">
+    This page is a summary. The full article is published on the {d.publication}.
+  </p>
+
+  <Fragment slot="after">
+    <section class="more-writing">
+      <h2 class="eyebrow">More writing</h2>
+      <ul class="more-list">
+        {
+          others.map((o) => (
+            <li>
+              <a href={`/publication/${o.data.slug}/`}>{o.data.title}</a>
+              <span class="more-meta">
+                {o.data.date} · {o.data.publication}
+              </span>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+  </Fragment>
+</ArticleLayout>

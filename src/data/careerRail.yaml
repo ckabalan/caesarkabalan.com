@@ -1,0 +1,16 @@
+# The horizontal 20-year rail at the top of Experience.
+# `pct` values are proportional to real duration and should total 100.
+# Keep labels short: the narrow segments are only about 100px wide.
+
+- label: "Early"
+  span: "2006 - 2011"
+  pct: 25
+- label: "Gore"
+  span: "2011 - 2022"
+  pct: 55
+- label: "AWS"
+  span: "2022 - 2024"
+  pct: 10
+- label: "Gore"
+  span: "2024 - now"
+  pct: 10

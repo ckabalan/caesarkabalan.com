@@ -1,0 +1,10 @@
+---
+import { SITE, profile } from "../lib/site";
+const year = 2026;
+---
+<footer class="site-foot">
+  <div class="wrap foot-inner">
+    <p>© {year} {profile.name}</p>
+    <p><a href={SITE.licenseUrl} rel="noopener">{SITE.license}</a></p>
+  </div>
+</footer>

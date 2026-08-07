@@ -1,0 +1,17 @@
+---
+import { NAV, profile } from "../lib/site";
+interface Props { spy?: boolean }
+const { spy = false } = Astro.props;
+// On detail routes the section anchors live on the home page, so link out to them.
+const prefix = spy ? "" : "/";
+---
+<header class="site-head">
+  <div class="wrap head-inner">
+    <a class="brand" href="/">{profile.name}</a>
+    <nav class="nav" aria-label="Sections">
+      {NAV.map(({ label, slug }) => (
+        <a href={`${prefix}#${slug}`} data-nav={spy ? slug : undefined}>{label}</a>
+      ))}
+    </nav>
+  </div>
+</header>
