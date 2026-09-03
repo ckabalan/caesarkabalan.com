@@ -1,0 +1,120 @@
+---
+// Latin subset only. The full imports ship ~31 woff2 files (cyrillic, greek,
+// vietnamese, latin-ext) that this site never uses. Latin covers every glyph
+// here except the arrow in the proof strip (U+2192), which neither typeface
+// ships in any subset, so it falls back to a system font by design.
+import "@fontsource/montserrat/latin-300.css";
+import "@fontsource/montserrat/latin-400.css";
+import "@fontsource/montserrat/latin-600.css";
+import "@fontsource/roboto/latin-400.css";
+import "@fontsource/roboto/latin-500.css";
+import "../styles/base.css";
+import SiteHeader from "../components/SiteHeader.astro";
+import SiteFooter from "../components/SiteFooter.astro";
+import { SITE } from "../lib/site";
+
+interface Props {
+  title?: string;
+  description?: string;
+  /** Set false on detail routes so section anchors do not scroll-spy. */
+  spy?: boolean;
+  /** JSON-LD object, serialised into a script tag. */
+  jsonLd?: Record<string, unknown>;
+  /** Historical stub routes set this so they do not dilute search presence. */
+  noindex?: boolean;
+}
+
+const {
+  title = SITE.title,
+  description = SITE.description,
+  spy = false,
+  jsonLd,
+  noindex = !SITE.indexable,
+} = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, SITE.url).href;
+const ogImage = new URL("/assets/caesar-kabalan.webp", SITE.url).href;
+---
+
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href="/assets/favicon.svg" />
+    {SITE.indexable && <link rel="sitemap" href="/sitemap-index.xml" />}
+    {noindex && <meta name="robots" content="noindex,follow" />}
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta name="twitter:card" content="summary" />
+
+    {
+      jsonLd && (
+        <script
+          is:inline
+          type="application/ld+json"
+          set:html={JSON.stringify(jsonLd)}
+        />
+      )
+    }
+  </head>
+
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+    <SiteHeader spy={spy} />
+    <main id="main">
+      <slot />
+    </main>
+    <SiteFooter />
+
+    {
+      spy && (
+        <script>
+          {/* Scrollspy only. Active state is an ADDITION, never a removal, so a
+              page with nothing intersecting never looks broken. */}
+          document.addEventListener("DOMContentLoaded", () => {
+            const links = Array.from(
+              document.querySelectorAll<HTMLAnchorElement>("[data-nav]"),
+            );
+            if (!("IntersectionObserver" in window) || links.length === 0) return;
+
+            const observer = new IntersectionObserver(
+              (entries) => {
+                for (const entry of entries) {
+                  if (!entry.isIntersecting) continue;
+                  for (const link of links) link.removeAttribute("aria-current");
+                  const match = links.find(
+                    (link) => link.dataset.nav === entry.target.id,
+                  );
+                  if (match) match.setAttribute("aria-current", "true");
+                }
+              },
+              { rootMargin: "-40% 0px -55% 0px" },
+            );
+
+            for (const link of links) {
+              const slug = link.dataset.nav;
+              if (!slug) continue;
+              const section = document.getElementById(slug);
+              if (section) observer.observe(section);
+            }
+
+            {/* Opening a role grows the page a lot; nudge layout consumers. */}
+            for (const d of document.querySelectorAll("details")) {
+              d.addEventListener("toggle", () =>
+                window.dispatchEvent(new Event("resize")),
+              );
+            }
+          });
+        </script>
+      )
+    }
+  </body>
+</html>

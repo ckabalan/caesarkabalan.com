@@ -1,0 +1,10 @@
+---
+import type { ProofItem } from "../lib/site";
+interface Props { items: ProofItem[] }
+const { items } = Astro.props;
+---
+<ul class="proof">
+  {items.map((i) => (
+    <li>{i.url ? <a href={i.url} rel="noopener">{i.text}</a> : i.text}</li>
+  ))}
+</ul>

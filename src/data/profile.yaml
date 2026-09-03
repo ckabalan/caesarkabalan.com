@@ -1,0 +1,64 @@
+# Identity, hero copy, and contact details for the whole site.
+
+name: "Caesar Kabalan"
+kicker: "Chronic Early Adopter"
+roleLine:
+  - "AI & Cloud Architect"
+  - "Gore Medical"
+  - "Sunbury, Ohio"
+
+# One or two sentences. Shown directly under the name.
+positioning: >-
+  I architect cloud, infrastructure, and AI for Gore Medical. Twenty years in
+  infrastructure, currently spent getting large language models from proof of concept
+  into production.
+
+# Four short facts, rendered as two columns of two under the
+# positioning line. Add a `url` to turn one into a link.
+proof:
+  - text: "20 years infrastructure → cloud → AI"
+  - text: "Agentic research agent serving 7,000 associates"
+  - text: "3 AWS technical publications"
+  - text: "visualsubnetcalc.com"
+    url: "https://visualsubnetcalc.com"
+
+# Long-form biography. One list entry per paragraph.
+biography:
+  - >-
+    I'm the AI & Cloud Architect for Gore Medical. I help shape the future
+    of Gore's IT systems across multiple disciplines, and I lead our strategy for
+    integrating AI and large language models into business processes and personal
+    productivity. Before this I spent two years as a Solutions Architect with Amazon Web
+    Services, and before that I was Gore's principal cloud engineer, architecting and
+    leading the technical direction of our AWS and Microsoft Azure environments.
+  - >-
+    I've been in a number of roles, mostly infrastructure-related and
+    developer-adjacent. I enjoy bringing programming skills to the environments I operate, build,
+    and maintain, and I care about finding the right way to implement any technology I'm
+    working with. I try to raise the level of the teams I work with by bringing in
+    industry practices and researching the trends that could improve our tools and
+    processes. Outside work I restore, tweak, and reprogram pinball machines.
+
+interests:
+  - "AI & LLM Integration"
+  - "Cloud Networking"
+  - "Infrastructure as Code"
+
+education:
+  degree: "BS Computer Information Systems"
+  institution: "Northern Arizona University"
+  year: "2012"
+
+email: "caesar.kabalan@gmail.com"
+location: "Sunbury, Ohio"
+
+links:
+  github: "https://github.com/ckabalan"
+  linkedin: "https://www.linkedin.com/in/caesarkabalan"
+  stackoverflow: "https://stackoverflow.com/users/606974"
+  resume: "assets/resume.pdf"
+
+# Contact section lead-in.
+contactLead: >-
+  Reach out by email or connect on LinkedIn. Happy to talk cloud architecture, LLM
+  integration, or pinball.

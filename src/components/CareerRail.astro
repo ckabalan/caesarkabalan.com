@@ -1,0 +1,14 @@
+---
+import type { RailSegment } from "../lib/site";
+interface Props { segments: RailSegment[] }
+const { segments } = Astro.props;
+const spoken = segments.map((s) => `${s.label} ${s.span}`).join(", ");
+---
+<div class="career-rail" role="img" aria-label={`Career timeline: ${spoken}.`}>
+  {segments.map((s) => (
+    <div class="seg" style={`--pct:${s.pct}`}>
+      <span class="seg-label">{s.label}</span>
+      <span class="seg-span">{s.span}</span>
+    </div>
+  ))}
+</div>

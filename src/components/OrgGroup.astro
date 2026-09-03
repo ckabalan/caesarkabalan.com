@@ -1,0 +1,15 @@
+---
+import type { CollectionEntry } from "astro:content";
+import ExperienceEntry from "./ExperienceEntry.astro";
+interface Props { roles: CollectionEntry<"experience">[] }
+const { roles } = Astro.props;
+const head = roles[0].data;
+---
+<section class="org">
+  <header class="org-head">
+    <img class="org-logo" src={head.logo} alt={head.logoAlt} width="88" height="32" />
+    <h3 class="org-name">{head.org}</h3>
+    <p class="org-span">{head.groupSpan}</p>
+  </header>
+  {roles.map((r) => <ExperienceEntry entry={r} />)}
+</section>

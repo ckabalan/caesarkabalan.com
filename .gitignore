@@ -1,13 +1,23 @@
-# Generated files by hugo
-/public/
-/resources/_gen/
-/assets/jsconfig.json
-hugo_stats.json
+.DS_Store
+._*
+Thumbs.db
+*.log
 
-# Executable may be added to repository
-hugo.exe
-hugo.darwin
-hugo.linux
+# build output
+dist/
+.astro/
 
-# Temporary lock file while building
-/.hugo_build.lock
+# dependencies
+node_modules/
+
+# python bytecode from the one-time migration tooling
+__pycache__/
+.gstack/
+
+# gstack tooling state, includes a local auth token
+.gstack/
+
+mockups/
+_raw_content/
+DESIGN-PLAN.md
+tools/migrate_from_mockup.py

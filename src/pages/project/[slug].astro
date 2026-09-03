@@ -1,0 +1,61 @@
+---
+import { getCollection, render } from "astro:content";
+import ArticleLayout from "../../layouts/ArticleLayout.astro";
+import { SITE } from "../../lib/site";
+
+export async function getStaticPaths() {
+  const projects = await getCollection("projects");
+  return projects.map((entry) => ({
+    params: { slug: entry.data.slug },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const d = entry.data;
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  name: d.title,
+  applicationCategory: "DeveloperApplication",
+  operatingSystem: "Any",
+  url: d.site,
+  codeRepository: d.repo,
+  author: { "@type": "Person", name: "Caesar Kabalan", url: SITE.url },
+};
+---
+
+<ArticleLayout
+  title={d.title}
+  description="Visual Subnet Calc is an open-source tool for quickly designing networks and collaborating on those designs."
+  meta={["Open-source project", d.siteLabel]}
+  image={{
+    src: d.image,
+    alt: d.imageAlt,
+    w: d.imageWidth,
+    h: d.imageHeight,
+    caption:
+      "Splitting and joining subnets, with notes and colours, entirely in the browser.",
+  }}
+  actions={[
+    { href: d.site, label: `Visit ${d.siteLabel}`, primary: true },
+    { href: d.repo, label: "Source" },
+  ]}
+  jsonLd={jsonLd}
+>
+  <Content />
+  {
+    d.tenets.length > 0 && (
+      <>
+        <h2>Project tenets</h2>
+        <ul>
+          {d.tenets.map((t) => (
+            <li>{t}</li>
+          ))}
+        </ul>
+      </>
+    )
+  }
+</ArticleLayout>

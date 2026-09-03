@@ -1,0 +1,33 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { render } from "astro:content";
+interface Props { entry: CollectionEntry<"experience"> }
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const d = entry.data;
+const total = d.accomplishments.reduce((n, g) => n + g.items.length, 0);
+const word = total === 1 ? "accomplishment" : "accomplishments";
+---
+<article class="entry">
+  <p class="entry-meta">
+    <span>{d.period}</span>
+    {d.location && <span>{d.location}</span>}
+  </p>
+  <h4 class="entry-title">{d.title}</h4>
+  <div class="entry-summary"><Content /></div>
+  {total > 0 && (
+    <details>
+      <summary>View {total} {word}</summary>
+      <div class="acc">
+        {d.accomplishments.map((g) => (
+          <>
+            {g.label && <p class="acc-label">{g.label}</p>}
+            <ul class="bullets">
+              {g.items.map((i) => <li>{i}</li>)}
+            </ul>
+          </>
+        ))}
+      </div>
+    </details>
+  )}
+</article>

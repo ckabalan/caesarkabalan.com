@@ -1,0 +1,21 @@
+---
+import SocialIcon from "./SocialIcon.astro";
+import { profile } from "../lib/site";
+// Closes every detail route. Someone who arrived from visualsubnetcalc.com or from
+// an AWS blog post should not have to guess who wrote it.
+const bio = profile.biography[0];
+---
+<aside class="author">
+  <img class="author-img" src="/assets/caesar-kabalan.webp" alt={profile.name}
+       width="720" height="1080" loading="lazy" decoding="async" />
+  <div class="author-body">
+    <p class="author-name">{profile.name}</p>
+    <p class="author-role">{profile.roleLine[0]}, {profile.roleLine[1]}</p>
+    <p class="author-bio">{bio}</p>
+    <p class="actions actions--tight">
+      <a class="btn btn--filled" href="/#experience">See the full background</a>
+      <a class="btn btn--icon" href={`mailto:${profile.email}`}><SocialIcon name="mail" /><span>Email</span></a>
+      <a class="btn btn--icon" href={profile.links.linkedin} rel="noopener"><SocialIcon name="linkedin" /><span>LinkedIn</span></a>
+    </p>
+  </div>
+</aside>

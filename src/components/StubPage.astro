@@ -1,0 +1,18 @@
+---
+// Historical routes from the old Hugo site. These real pages orient the reader and
+// point at the right section. noindex,follow keeps nine thin pages from diluting a
+// five-page site's own search presence.
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { SITE } from "../lib/site";
+interface Props { title: string; body: string; href: string; hrefLabel: string }
+const { title, body, href, hrefLabel } = Astro.props;
+---
+<BaseLayout title={`${title}, ${SITE.title}`} description={body} noindex>
+  <section class="band band--a">
+    <div class="wrap article">
+      <h1 class="article-title">{title}</h1>
+      <p class="article-lead">{body}</p>
+      <p class="actions"><a class="btn btn--filled" href={href}>{hrefLabel}</a></p>
+    </div>
+  </section>
+</BaseLayout>
