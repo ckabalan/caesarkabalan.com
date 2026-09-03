@@ -1,5 +1,5 @@
 ---
-title: "Cloud & Infrastructure Architect"
+title: "AI & Cloud Architect"
 org: "W. L. Gore & Associates"
 # Roles sharing a `group` render under one org header with one logo.
 group: "w-l-gore-associates"
@@ -19,14 +19,14 @@ accomplishments:
         both business and technical readers.
       - >-
         Launched a agent research chatbot to 7,000 internal associates. It answers more
-        than 5,000 questions a month against internal product, scientific, and quality
+        than 15,000 questions a month against internal product, scientific, and quality
         documentation. Users report shorter project timelines, more productive meetings,
         less manufacturing downtime, and less re-work.
       - >-
         Created a custom RAG indexing pipeline with Azure AI Search and Microsoft Foundry
         for a large corpus of internal scientific and quality documents in Product Lifecycle Management.
       - >-
-        Designed DARE, a Document AI Readiness Engine that converts Word, PDF,
+        Designed a Document AI Readiness Engine that converts Word, PDF,
         PowerPoint, Excel, image, audio, and video files into AI-ready Markdown as a
         central service, so teams stop rebuilding fragile document conversion pipelines.
         Built on FastAPI, Azure Container Apps, Event Grid, Service Bus, and Azure AI

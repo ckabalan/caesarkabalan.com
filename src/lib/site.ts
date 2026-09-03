@@ -74,11 +74,16 @@ export const NAV = [
   { label: "Contact", slug: "contact" },
 ] as const;
 
+const siteUrl = process.env.SITE_URL ?? "https://dev.caesarkabalan.com";
+
 export const SITE = {
-  url: "https://caesarkabalan.com",
+  url: siteUrl,
+  // Dev and preview builds stay out of search results. The future production
+  // Cloudflare project must opt in with SITE_INDEXABLE=true.
+  indexable: process.env.SITE_INDEXABLE === "true",
   title: `${profile.name}, ${profile.roleLine[0]}`,
   description:
-    "Caesar Kabalan is the Cloud & Infrastructure Architect for Gore Medical, " +
+    "Caesar Kabalan is the AI & Cloud Architect for Gore Medical, " +
     "leading strategy for AI and large language model integration. Twenty years " +
     "across infrastructure, cloud, and AI.",
   license: "CC BY 4.0",

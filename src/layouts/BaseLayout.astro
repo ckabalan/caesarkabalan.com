@@ -29,7 +29,7 @@ const {
   description = SITE.description,
   spy = false,
   jsonLd,
-  noindex = false,
+  noindex = !SITE.indexable,
 } = Astro.props;
 
 const canonical = new URL(Astro.url.pathname, SITE.url).href;
@@ -45,7 +45,7 @@ const ogImage = new URL("/assets/caesar-kabalan.webp", SITE.url).href;
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
     <link rel="icon" href="/assets/favicon.svg" />
-    <link rel="sitemap" href="/sitemap-index.xml" />
+    {SITE.indexable && <link rel="sitemap" href="/sitemap-index.xml" />}
     {noindex && <meta name="robots" content="noindex,follow" />}
 
     <meta property="og:type" content="website" />

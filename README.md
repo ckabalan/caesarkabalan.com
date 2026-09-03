@@ -1,7 +1,7 @@
 # caesarkabalan.com
 
 Personal CV and portfolio site. Static HTML, built with [Astro](https://astro.build),
-served by GitHub Pages.
+served by [Cloudflare Pages](https://pages.cloudflare.com/).
 
 **You edit content files. A build turns them into HTML.** You never edit HTML by hand,
 and you never commit generated output.
@@ -22,8 +22,10 @@ Edit a file in `src/content/` or `src/data/`, watch the browser update, then:
 git add -A && git commit -m "Update experience" && git push
 ```
 
-Pushing to `main` triggers `.github/workflows/deploy.yml`, which builds the site and
-publishes it. Live in about two minutes. There is no manual deploy step.
+Pushing to `develop` automatically updates `dev.caesarkabalan.com`. The future
+production project will deploy `main` to `www.caesarkabalan.com`; it is intentionally
+not active yet. Cloudflare builds directly from GitHub, so there is no deployment
+workflow in this repository.
 
 ---
 
@@ -153,20 +155,52 @@ one, the build fails and names the file and the field. A typo cannot silently sh
 
 ## Deploying
 
-Automatic on push to `main`. To watch or re-run it, use the Actions tab in GitHub;
-`workflow_dispatch` lets you re-deploy without a commit.
+Cloudflare Pages uses two projects connected to this GitHub repository. Treat each
+project's production branch as its stable environment; other branches may receive
+temporary `*.pages.dev` preview URLs.
 
-### One-time GitHub setup
+| Cloudflare project | Git branch | Custom domain | Indexable |
+| --- | --- | --- | --- |
+| `caesarkabalan-dev` | `develop` | `dev.caesarkabalan.com` | No |
+| `caesarkabalan-production` (future) | `main` | `www.caesarkabalan.com` | Yes |
 
-1. Repository **Settings → Pages → Build and deployment → Source: GitHub Actions**.
-2. **Settings → Pages → Custom domain:** `caesarkabalan.com`.
-3. DNS at your registrar:
-   - `A` records for the apex to `185.199.108.153`, `185.199.109.153`,
-     `185.199.110.153`, `185.199.111.153`
-   - `CNAME` for `www` to `ckabalan.github.io`
-4. Tick **Enforce HTTPS** once the certificate is issued.
+### Dev project settings
 
-`public/CNAME` already contains the domain, so the setting survives redeploys.
+- Framework preset: Astro
+- Production branch: `develop`
+- Build command: `npm run build`
+- Build output directory: `dist`
+- Root directory: `/`
+- Build environment variable: `SITE_URL=https://dev.caesarkabalan.com`
+- Do not set `SITE_INDEXABLE`, or set it to `false`
+- Custom domain: `dev.caesarkabalan.com`
+
+Cloudflare automatically builds and publishes after each push to `develop`. This
+project deliberately emits `noindex` metadata and a disallowing `robots.txt`.
+
+### Future production project settings
+
+- Production branch: `main`
+- Build command: `npm run build`
+- Build output directory: `dist`
+- Root directory: `/`
+- Build environment variable: `SITE_URL=https://www.caesarkabalan.com`
+- Build environment variable: `SITE_INDEXABLE=true`
+- Primary custom domain: `www.caesarkabalan.com`
+
+Add `caesarkabalan.com` to the production project as a second custom domain. Create a
+Cloudflare Single Redirect that matches only the hostname `caesarkabalan.com` and sends
+a permanent `301` redirect to the equivalent URL on `www.caesarkabalan.com`, preserving
+the path and query string. Do not match `dev.caesarkabalan.com`. This retains the
+existing public domain behavior while ensuring canonical, Open Graph, JSON-LD, robots,
+and sitemap URLs all use `www`.
+
+### Environment-aware URLs
+
+`SITE_URL` is consumed at build time by both `astro.config.mjs` and `src/lib/site.ts`.
+It controls canonical URLs, Open Graph URLs, JSON-LD, and the generated sitemap. Local
+builds default to the dev domain. `SITE_INDEXABLE` is opt-in so an incomplete Pages
+configuration cannot accidentally make a preview environment indexable.
 
 ---
 
@@ -193,7 +227,6 @@ src/
 
 public/                Copied to the site root verbatim.
   assets/                images, logos, favicon, resume.pdf
-  CNAME, robots.txt, .nojekyll
 ```
 
 ### Routes
@@ -202,7 +235,8 @@ public/                Copied to the site root verbatim.
 site (`/tags/`, `/categories/`, `/post/`, `/event/`, and the bare `/project/` and
 `/publication/` indexes) render small pages that point at the right section, carrying
 `noindex,follow` so nine thin pages do not dilute a five-page site's search presence.
-GitHub Pages cannot do server-side redirects, which is why these are real pages.
+Keeping them as real pages also gives visitors context instead of an unexplained
+redirect from an old bookmarked URL.
 
 ---
 
